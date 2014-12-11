@@ -23,7 +23,6 @@ def read_problems_file(f):
             (name, text) = problems[-1]
             problems[-1] = Problem(name, text + [line])
 
-    problems = [Problem(name=p.name, text='\n'.join(p.text)) for p in problems]
     problems = {p.name: p for p in problems}
     return problems
 
@@ -31,6 +30,14 @@ def load_problems():
     with open(PROBLEMS_FILE) as f:
         return read_problems_file(f)
 
+def make_entry_file(problem, path):
+    with open(path, 'w') as f:
+        f.write("# PROBLEM: {}\n".format(problem.name))
+        comment = lambda line: "# {}\n".format(line)
+        f.writelines(map(comment, problem.text))
+
 if __name__ == "__main__":
     problems = load_problems()
+    p = problems.values()[0]
+    make_entry_file(p, "entry_{}.py".format(p.name))
     print("bee.py implementation not finished")
