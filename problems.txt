@@ -1,0 +1,54 @@
+PROBLEM: palindrome
+Write a function called 'palindrome' that takes a string and returns whether it is a palindrome.
+
+PROBLEM: aggregate
+Write a function called 'aggregate' that adds two numbers.
+
+PROBLEM: getmoney
+Write a function called 'affluent' which, when called with "get money" returns "get paid",
+when called with anything else, it returns None.
+
+PROBLEM: sumargs
+Write a function called 'cumulative' that takes any number of integer arguments
+and returns their sum.
+
+PROBLEM: palindromedec
+Write a function called 'palindrome' that takes a number and returns whether it's decimal form is a palindrome.
+
+PROBLEM: counterclass
+Write a class Counter (capital C) which is constructed with no parameters.
+Counter should have one method, 'get', which returns 0 the first time it is called, 1 the second, etc.
+
+PROBLEM: linearcurry
+Write a function called 'line' that takes two parameters representing a line:
+slope (m), y-intercept (b). 'line' should return another function which takes
+a parameter (x) and returns the y value of the line at that x.
+
+PROBLEM: everyother
+Write a function called 'kerfuffle' which returns every other letter of an input string.
+
+PROBLEM: decsplit
+write a function called 'sever' that takes a two digit number and returns a tuple
+containing the tens place, and the ones place of the input.
+
+PROBLEM: mapfunc
+Write a function callled 'cartographer' that takes a function and a list
+and returns the result of applying that function to each element in the list.
+Do not use the built-in `map`.
+
+PROBLEM: filterflip
+Write a function called 'sieve' that takes a list of numbers and returns only
+the even numbers in the reverse of the order that they appeared.
+
+PROBLEM: composefunc
+Write a funciton called 'compose' which takes two functions; a, b, and returns a function
+which when applied to some input x yields a(b(x)).
+
+PROBLEM: notfizzbuzz
+Write a function called 'seltzer' that returns the string "buzz" the first three times it is called,
+returns "fizz" the fourth time, and throws a RuntimeException subsequently.
+
+PROBLEM: multiapply
+Write a function called 'germinate' that takes three parameters, a seed value, a 'next' function,
+and a number n. Return a list that is n long and begins with the seed, where each value
+is the 'next' function applied to the preceeding value.
