@@ -5,6 +5,9 @@ Write a function called 'aggregate' that adds two numbers.
 Write a function called 'affluent' which, when called with "get money" returns "get paid",
 when called with anything else, it returns None.
 
+Write a function called 'cumulative' that takes any number of integer arguments
+and returns their sum.
+
 Write a function called 'palindrome' that takes a number and returns whether it's decimal form is a palindrome.
 
 Write a class Counter (capital C) which is constructed with no parameters.
@@ -26,8 +29,12 @@ Do not use the built-in `map`.
 Write a function called 'sieve' that takes a list of numbers
 and returns only the even numbers in the order that the appeared.
 
+Write a funciton called 'compose' which takes two functions; a, b, and returns a function
+which when applied to some input x yields a(b(x)).
+
 Write a function called 'seltzer' that returns the string "buzz" the first three times it is called,
 returns "fizz" the fourth time, and throws a RuntimeException subsequently.
 
-Write a function called 'cumulative' that takes any number of integer arguments
-and returns their sum.
+Write a function called 'germinate' that takes three parameters, a seed value, a 'next' function,
+and a number n. Return a list that is n long and begins with the seed, where each value
+is the 'next' function applied to the preceeding value.
