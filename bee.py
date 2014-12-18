@@ -18,8 +18,9 @@ Options:
 """
 
 import re
+import os.path
 from collections import namedtuple
-from pprint import pprint
+from importlib import import_module
 from docopt import docopt
 
 PROBLEMS_FILE = "problems.txt"
@@ -50,11 +51,21 @@ def load_problems():
     with open(PROBLEMS_FILE) as f:
         return read_problems_file(f)
 
+def get_problem_or_die(probname, problems):
+        p = problems.get(probname)
+        if not p:
+            print "No such problem: '{}'".format(probname)
+            raise SystemExit
+        return p
+
 def make_entry_file(problem, path):
     with open(path, 'w') as f:
         f.write("# PROBLEM: {}\n".format(problem.name))
         comment = lambda line: "# {}\n".format(line)
         f.writelines(map(comment, problem.text))
+
+def entry_filepath(probname, player):
+    return "entries/{}_{}.py".format(probname, player)
 
 if __name__ == '__main__':
     arguments = docopt(__doc__)
@@ -66,20 +77,52 @@ if __name__ == '__main__':
         print "Problems loaded from: {}".format(PROBLEMS_FILE)
         for probname in problems:
             print probname
+
     elif arguments['start']:
         player = arguments['<player>']
         probname = arguments['<problem>']
         if not probname:
             raise NotImplementedError("'Start' on randomized problem not implemented")
-        p = problems.get(probname)
-        if not p:
-            print "No such problem: '{}'".format(probname)
-            raise SystemExit
+        p = get_problem_or_die(probname, problems)
 
-        entryfile = "entries/{}_{}.py".format(p.name, player)
+        entryfile = entry_filepath(p.name, player)
         make_entry_file(p, entryfile)
         print "Created entry for '{}': {}".format(p.name, entryfile)
+
     elif arguments['test']:
-        raise NotImplementedError("'Test' not implemented")
+        player = arguments.get('<player>')
+        probname = arguments.get('<problem>')
+        entryfile = arguments.get('<file>')
+
+        if player and probname:
+            entryfile = entry_filepath(probname, player)
+        elif entryfile:
+            raise NotImplementedError("'Test' not implemented for files")
+        elif arguments['--last']:
+            raise NotImplementedError("'Test' not implemented for last modified")
+
+        # convert entryfile into entrymodule to import
+        entry_module = entryfile.strip(".py").replace('/', '.')
+
+        testfile = "tests/" + probname + ".py"
+        if not os.path.isfile(testfile):
+            print "No test exists for '{}'".format(probname)
+            print "To add a test, create: {}".format(testfile)
+            raise SystemExit
+
+        if not os.path.isfile(entryfile):
+            print "Entry file does not exist: {}".format(entryfile)
+            raise SystemExit
+
+        print "Testing:\n  {}\n  {}".format(entry_module, testfile)
+
+        # import test function from test file
+        test = import_module("tests." + probname).test
+        # import entry module
+        entry = import_module(entry_module)
+
+        # run test
+        test(entry)
+
     elif arguments['wipe']:
         raise NotImplementedError("'Wipe' not implemented")
