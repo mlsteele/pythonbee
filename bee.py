@@ -19,8 +19,10 @@ Options:
 
 import re
 import os.path
+import traceback
 from collections import namedtuple
 from importlib import import_module
+import blessings
 from docopt import docopt
 
 PROBLEMS_FILE = "problems.txt"
@@ -69,9 +71,8 @@ def entry_filepath(probname, player):
 
 if __name__ == '__main__':
     arguments = docopt(__doc__)
-    print arguments, '\n'
-
     problems = load_problems()
+    term = blessings.Terminal()
 
     if arguments['list']:
         print "Problems loaded from: {}".format(PROBLEMS_FILE)
@@ -115,14 +116,29 @@ if __name__ == '__main__':
             raise SystemExit
 
         print "Testing:\n  {}\n  {}".format(entry_module, testfile)
+        print ""
 
         # import test function from test file
         test = import_module("tests." + probname).test
-        # import entry module
-        entry = import_module(entry_module)
+        # import entry module (could fail for syntax)
+        try:
+            entry = import_module(entry_module)
+        except Exception as e:
+            print term.red("Syntax Error")
+            print term.yellow(traceback.format_exc())
+            print term.red("Test Failed")
+            raise SystemExit
 
         # run test
-        test(entry)
+        try:
+            test(entry)
+        except Exception as e:
+            print term.red("Runtime Error")
+            print term.yellow(traceback.format_exc())
+            print term.red("Test Failed")
+            raise SystemExit
+
+        print term.green("Test Passed")
 
     elif arguments['wipe']:
         raise NotImplementedError("'Wipe' not implemented")
