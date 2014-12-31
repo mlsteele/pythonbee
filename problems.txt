@@ -46,7 +46,7 @@ which when applied to some input x yields a(b(x)).
 
 PROBLEM: notfizzbuzz
 Write a function called 'seltzer' that returns the string "buzz" the first three times it is called,
-returns "fizz" the fourth time, and throws a RuntimeException subsequently.
+returns "fizz" the fourth time, and throws a RuntimeError subsequently.
 
 PROBLEM: multiapply
 Write a function called 'germinate' that takes three parameters, a seed value, a 'next' function,
