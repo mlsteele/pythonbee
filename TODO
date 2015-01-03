@@ -1,0 +1,6 @@
+- Start should not overwrite existing entries
+- Implement all things that now are NotImplementedError
+- Have tests for all problems
+- Categorize problems by difficulty
+- Randomly select problem to submit
+- Decide how to handle multiple submissions
